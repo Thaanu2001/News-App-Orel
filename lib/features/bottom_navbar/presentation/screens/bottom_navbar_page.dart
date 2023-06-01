@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../cubit/bottom_navbar_cubit.dart';
 import 'bottom_navbar_view.dart';
 
 class BottomNavbarPage extends StatelessWidget {
@@ -6,6 +9,9 @@ class BottomNavbarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const BottomNavbarView();
+    return BlocProvider(
+      create: (context) => BottomNavbarCubit(),
+      child: const BottomNavbarView(),
+    );
   }
 }

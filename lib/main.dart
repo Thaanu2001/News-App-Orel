@@ -13,6 +13,7 @@ class NewsApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'News App Orel',
+      debugShowCheckedModeBanner: false,
       home: BottomNavbarPage(),
     );
   }

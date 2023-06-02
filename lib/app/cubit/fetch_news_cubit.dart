@@ -22,22 +22,23 @@ class FetchNewsCubit extends Cubit<FetchNewsState> {
 
   Future<void> fetchNewsList(String category) async {
     emit(const FetchNewsState.loading());
-    // try {
-    final result = await _fetchNewsRepository.fetchNewsList(category: category);
+    try {
+      final result =
+          await _fetchNewsRepository.fetchNewsList(category: category);
 
-    result.fold((errorMessage) {
+      result.fold((errorMessage) {
+        if (!isClosed) {
+          emit(FetchNewsState.errorOccured(errorMessage));
+        }
+      }, (newsList) {
+        if (!isClosed) {
+          emit(FetchNewsState.loaded(newsList));
+        }
+      });
+    } catch (e) {
       if (!isClosed) {
-        emit(FetchNewsState.errorOccured(errorMessage));
+        emit(const FetchNewsState.errorOccured(null));
       }
-    }, (newsList) {
-      if (!isClosed) {
-        emit(FetchNewsState.loaded(newsList));
-      }
-    });
-    // } catch (e) {
-    //   if (!isClosed) {
-    //     emit(const FetchNewsState.errorOccured(null));
-    //   }
-    // }
+    }
   }
 }
